@@ -1,0 +1,6 @@
+# Manager configuration for controller
+apiVersion: ctrl.ai/v1alpha1
+kind: Manager
+metricsBindAddress: :8080
+healthProbeBindAddress: :8081
+enableLeaderElection: true

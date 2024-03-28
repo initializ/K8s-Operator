@@ -1,0 +1,4 @@
+# Default manager configuration
+apiVersion: ctrl.ai/v1alpha1
+kind: Manager
+metricsBindAddress: :8080

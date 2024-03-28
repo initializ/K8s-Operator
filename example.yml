@@ -1,0 +1,25 @@
+apiVersion: secrets.initializ.ai/v1alpha1
+kind: InitzSecret
+metadata:
+  name: initzsecret-sample
+spec:
+  hostAPI: https://secret.initializ.ai
+  resyncInterval: 60
+  authentication:
+    serviceToken:
+      serviceTokenSecretReference:
+        secretName: service-token
+        secretNamespace: default
+      secretsScope:
+        workspace: global
+        envSlug: test
+        orgId: 12e32r43w5ye6ru7
+        secretsPath: "/"
+        objectIds:
+          - "91047ea9d940b103"
+          - "w3245674354edf43"
+          - "qwesrdtyug345677"
+          - "rtyguhijo5678909"
+  managedSecretReference:
+    secretName: managed-secret
+    secretNamespace: default
