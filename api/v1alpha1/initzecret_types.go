@@ -43,8 +43,7 @@ type SecretsScope struct {
 
 // SecretReference defines the reference to a Kubernetes secret
 type SecretReference struct {
-	SecretName      string `json:"secretName,omitempty"`
-	SecretNamespace string `json:"secretNamespace,omitempty"`
+      Servicetoken string `json:"servicetoken,omitempty"`
 }
 
 // ManagedSecretReference defines the reference to the managed Kubernetes secret

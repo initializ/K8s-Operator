@@ -4,7 +4,6 @@ import (
 	initializv1alpha1 "Initializ-Operator/api/v1alpha1"
 	"Initializ-Operator/package/util"
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/go-logr/logr"
@@ -65,14 +64,11 @@ func (r *InitzSecretReconciler) SetupWithManager(mgr ctrl.Manager) error {
 // ReconcileInitzSecret reconciles the InitzSecret resource
 func (r *InitzSecretReconciler) ReconcileInitzSecret(ctx context.Context, initzSecret initializv1alpha1.InitzSecret) error {
 	// Get the service token secret reference details from the InitzSecret
-	serviceTokenSecretName := initzSecret.Spec.Authentication.ServiceToken.ServiceTokenSecretReference.SecretName
-	serviceTokenSecretNamespace := initzSecret.Spec.Authentication.ServiceToken.ServiceTokenSecretReference.SecretNamespace
+
 
 	// Fetch the service token from the Kubernetes secret
-	serviceToken, err := r.getServiceTokenFromSecret(ctx, serviceTokenSecretName, serviceTokenSecretNamespace)
-	if err != nil {
-		return err
-	}
+	serviceToken := initzSecret.Spec.Authentication.ServiceToken.ServiceTokenSecretReference.Servicetoken
+
 
 	// Get other details from the InitzSecret
 	objectIds := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.SecretVars
@@ -104,22 +100,6 @@ func (r *InitzSecretReconciler) ReconcileInitzSecret(ctx context.Context, initzS
 	}
 
 	return nil
-}
-
-// getServiceTokenFromSecret retrieves the service token from the specified Kubernetes secret
-func (r *InitzSecretReconciler) getServiceTokenFromSecret(ctx context.Context, secretName, secretNamespace string) (string, error) {
-	secret := &corev1.Secret{}
-	err := r.Get(ctx, types.NamespacedName{Name: secretName, Namespace: secretNamespace}, secret)
-	if err != nil {
-		return "", err
-	}
-
-	serviceToken, ok := secret.Data["serviceToken"]
-	if !ok {
-		return "", fmt.Errorf("service token not found in secret")
-	}
-
-	return string(serviceToken), nil
 }
 
 // createOrUpdateManagedSecret creates or updates the managed Kubernetes secret

@@ -6,10 +6,9 @@ spec:
   hostAPI: https://secret.initializ.ai
   resyncInterval: 60
   authentication:
-    serviceToken:
+    serviceToken: 
       serviceTokenSecretReference:
-        secretName: service-token
-        secretNamespace: default
+        service-token: service-token
       secretsScope:
         workspace: global
         envSlug: test

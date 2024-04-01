@@ -34,9 +34,7 @@ spec:
                         serviceTokenSecretReference:
                           type: object
                           properties:
-                            secretName:
-                              type: string
-                            secretNamespace:
+                            service-token:
                               type: string
                         secretsScope:
                           type: object
