@@ -75,6 +75,7 @@ func (i *InitzSecretList) GetObjectKind() schema.ObjectKind {
 
 // InitzSecretStatus defines the observed state of InitzSecret
 type InitzSecretStatus struct {
+	LastReconcileTime metav1.Time `json:"lastReconcileTime,omitempty"`
 }
 
 func (in *InitzSecret) DeepCopyObject() runtime.Object {
@@ -122,30 +123,3 @@ func (in *InitzSecret) DeepCopy() *InitzSecret {
 	in.DeepCopyInto(out)
 	return out
 }
-
-// // PartialObjectMetadata is a partial representation of object metadata
-// type PartialObjectMetadata struct {
-// 	metav1.TypeMeta   `json:",inline"`
-// 	metav1.ObjectMeta `json:"metadata,omitempty"`
-// }
-
-// func (p *PartialObjectMetadata) DeepCopyObject() runtime.Object {
-// 	return p.DeepCopy()
-// }
-
-// func (p *PartialObjectMetadata) GetObjectKind() schema.ObjectKind {
-// 	return p
-// }
-
-// func (p *PartialObjectMetadata) GetObjectMeta() metav1.Object {
-// 	return p
-// }
-
-// func (p *PartialObjectMetadata) DeepCopy() *PartialObjectMetadata {
-// 	if p == nil {
-// 		return nil
-// 	}
-// 	out := new(PartialObjectMetadata)
-// 	p.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-// 	return out
-// }

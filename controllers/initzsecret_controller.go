@@ -45,7 +45,11 @@ func (r *InitzSecretReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		return ctrl.Result{}, err
 	}
 
-	
+	// Update status if necessary
+	if err := r.updateStatus(ctx, &initzSecret); err != nil {
+		log.Error(err, "Failed to update status")
+		return ctrl.Result{}, err
+	}
 
 	log.Info("Reconciliation completed successfully")
 	return ctrl.Result{}, nil
@@ -130,9 +134,6 @@ func (r *InitzSecretReconciler) createOrUpdateManagedSecret(ctx context.Context,
 		if err != nil {
 			return err
 		}
-
-		// ...
-
 	} else if err == nil {
 		// Update the secret if it exists
 		log.Printf("Updating an existing managed secret, Name: %s, Namespace: %s", secret.Name, secret.Namespace)
@@ -142,6 +143,21 @@ func (r *InitzSecretReconciler) createOrUpdateManagedSecret(ctx context.Context,
 			return err
 		}
 	} else {
+		return err
+	}
+
+	return nil
+}
+
+// updateStatus updates the status of the InitzSecret resource
+func (r *InitzSecretReconciler) updateStatus(ctx context.Context, initzSecret *initializv1alpha1.InitzSecret) error {
+	// Perform any status update logic here
+	// For example, updating the last reconcile time
+	initzSecret.Status.LastReconcileTime = metav1.Now()
+
+	// Update the status
+	err := r.Status().Update(ctx, initzSecret)
+	if err != nil {
 		return err
 	}
 

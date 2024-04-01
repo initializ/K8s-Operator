@@ -5,8 +5,8 @@ go 1.21.6
 require (
 	github.com/go-logr/logr v1.4.1
 	github.com/go-resty/resty/v2 v2.11.0
-	github.com/joho/godotenv v1.5.1
 	github.com/xdg-go/pbkdf2 v1.0.0
+	golang.org/x/tools v0.17.0
 	k8s.io/api v0.29.3
 	k8s.io/apimachinery v0.29.3
 	k8s.io/client-go v0.29.3

@@ -1,4 +1,4 @@
-apiVersion: secrets.initializ.ai/v1alpha1
+apiVersion: secrets.initializ.com/v1alpha1
 kind: InitzSecret
 metadata:
   name: initzsecret-sample
@@ -23,3 +23,5 @@ spec:
   managedSecretReference:
     secretName: managed-secret
     secretNamespace: default
+status:
+  lastReconcileTime: "2024-04-01T12:00:00Z"
