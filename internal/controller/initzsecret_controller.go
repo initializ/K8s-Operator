@@ -18,7 +18,9 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/go-logr/logr"
 	initializv1alpha1 "initializ.com/Initializ-Operator/api/v1"
@@ -73,13 +75,16 @@ func (r *InitzSecretReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	}
 
 	// Update status if necessary
-	if err := r.updateStatus(ctx, &initzSecret); err != nil {
-		log.Error(err, "Failed to update status")
-		return ctrl.Result{}, err
-	}
-
+	// if err := r.updateStatus(ctx, &initzSecret); err != nil {
+	// 	log.Error(err, "Failed to update status")
+	// 	return ctrl.Result{}, err
+	// }
+	requeueTime := time.Duration(initzSecret.Spec.ResyncInterval) * time.Second
 	log.Info("Reconciliation completed successfully")
-	return ctrl.Result{}, nil
+	fmt.Println("Reconciliation completed successfully")
+	return ctrl.Result{
+		RequeueAfter: requeueTime,
+	}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
@@ -95,12 +100,16 @@ func (r *InitzSecretReconciler) ReconcileInitzSecret(ctx context.Context, initzS
 
 	// Fetch the service token from the Kubernetes secret
 	serviceToken := initzSecret.Spec.Authentication.ServiceToken.ServiceTokenSecretReference.Servicetoken
+	fmt.Println("Service Token: ", serviceToken)
 
 	// Get other details from the InitzSecret
 	objectIds := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.SecretVars
 	orgID := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.Workspace
 	envSlug := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.EnvSlug
 
+	fmt.Println("Object IDs: ", objectIds)
+	fmt.Println("Org ID: ", orgID)
+	fmt.Println("Env Slug: ", envSlug)
 	// Fetch plaintext secrets via service token
 	plainTextSecrets, err := util.GetPlainTextSecretsViaServiceToken(serviceToken, orgID, envSlug, objectIds)
 	if err != nil {
@@ -156,16 +165,16 @@ func (r *InitzSecretReconciler) createOrUpdateManagedSecret(ctx context.Context,
 }
 
 // updateStatus updates the status of the InitzSecret resource
-func (r *InitzSecretReconciler) updateStatus(ctx context.Context, initzSecret *initializv1alpha1.InitzSecret) error {
-	// Perform any status update logic here
-	// For example, updating the last reconcile time
-	initzSecret.Status.LastReconcileTime = metav1.Now()
+// func (r *InitzSecretReconciler) updateStatus(ctx context.Context, initzSecret *initializv1alpha1.InitzSecret) error {
+// 	// Perform any status update logic here
+// 	// For example, updating the last reconcile time
+// 	initzSecret.Status.LastReconcileTime = metav1.Now()
 
-	// Update the status
-	err := r.Status().Update(ctx, initzSecret)
-	if err != nil {
-		return err
-	}
+// 	// Update the status
+// 	err := r.Status().Update(ctx, initzSecret)
+// 	if err != nil {
+// 		return err
+// 	}
 
-	return nil
-}
+// 	return nil
+// }

@@ -30,7 +30,6 @@ type InitzSecret struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	Spec   InitzSecretSpec   `json:"spec,omitempty"`
-	Status InitzSecretStatus `json:"status,omitempty"`
 }
 
 // InitzSecretSpec defines the desired state of InitzSecret
@@ -71,12 +70,6 @@ type ManagedSecretReference struct {
 	SecretNamespace string `json:"secretNamespace,omitempty"`
 }
 
-// InitzSecretStatus defines the observed state of InitzSecret
-type InitzSecretStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	LastReconcileTime metav1.Time `json:"lastReconcileTime,omitempty"`
-	// Important: Run "make" to regenerate code after modifying this file
-}
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
