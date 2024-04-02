@@ -1,0 +1,32 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - alpha.initializ.com
+  resources:
+  - initzsecrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - alpha.initializ.com
+  resources:
+  - initzsecrets/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - alpha.initializ.com
+  resources:
+  - initzsecrets/status
+  verbs:
+  - get
+  - patch
+  - update

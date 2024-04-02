@@ -1,9 +1,9 @@
 package util
 
 import (
-	"Initializ-Operator/package/api"
-	"Initializ-Operator/package/crypto"
 	"github.com/go-resty/resty/v2"
+	"initializ.com/Initializ-Operator/package/api"
+	"initializ.com/Initializ-Operator/package/crypto"
 )
 
 type KeyValue struct {

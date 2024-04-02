@@ -46,4 +46,3 @@ type GetEncryptedSecretResponse struct {
 	Message string       `json:"message"`
 	Data    []SecretData `json:"data"`
 }
-

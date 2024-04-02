@@ -1,10 +1,28 @@
-package v1alpha1
+/*
+Copyright 2024.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+package v1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 )
+
+// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
+// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // InitzSecret is the Schema for the initzsecrets API
 type InitzSecret struct {
@@ -17,6 +35,7 @@ type InitzSecret struct {
 
 // InitzSecretSpec defines the desired state of InitzSecret
 type InitzSecretSpec struct {
+	// Important: Run "make" to regenerate code after modifying this file
 	HostAPI                string                 `json:"hostAPI,omitempty"`
 	ResyncInterval         int64                  `json:"resyncInterval,omitempty"`
 	Authentication         Authentication         `json:"authentication,omitempty"`
@@ -43,7 +62,7 @@ type SecretsScope struct {
 
 // SecretReference defines the reference to a Kubernetes secret
 type SecretReference struct {
-      Servicetoken string `json:"servicetoken,omitempty"`
+	Servicetoken string `json:"servicetoken,omitempty"`
 }
 
 // ManagedSecretReference defines the reference to the managed Kubernetes secret
@@ -52,7 +71,17 @@ type ManagedSecretReference struct {
 	SecretNamespace string `json:"secretNamespace,omitempty"`
 }
 
-// +kubebuilder:object:root=true
+// InitzSecretStatus defines the observed state of InitzSecret
+type InitzSecretStatus struct {
+	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+	LastReconcileTime metav1.Time `json:"lastReconcileTime,omitempty"`
+	// Important: Run "make" to regenerate code after modifying this file
+}
+
+//+kubebuilder:object:root=true
+//+kubebuilder:subresource:status
+
+//+kubebuilder:object:root=true
 
 // InitzSecretList contains a list of InitzSecret
 type InitzSecretList struct {
@@ -61,63 +90,11 @@ type InitzSecretList struct {
 	Items           []InitzSecret `json:"items"`
 }
 
-// DeepCopyObject implements runtime.Object.
-func (i *InitzSecretList) DeepCopyObject() runtime.Object {
-	panic("unimplemented")
-}
-
-// GetObjectKind implements runtime.Object.
-// Subtle: this method shadows the method (TypeMeta).GetObjectKind of InitzSecretList.TypeMeta.
-func (i *InitzSecretList) GetObjectKind() schema.ObjectKind {
-	panic("unimplemented")
-}
-
-// InitzSecretStatus defines the observed state of InitzSecret
-type InitzSecretStatus struct {
-	LastReconcileTime metav1.Time `json:"lastReconcileTime,omitempty"`
+func init() {
+	SchemeBuilder.Register(&InitzSecret{}, &InitzSecretList{})
 }
 
 func (in *InitzSecret) DeepCopyObject() runtime.Object {
-	return in.DeepCopy()
-}
-
-// GetObjectKind returns the type of the object
-func (in *InitzSecret) GetObjectKind() schema.ObjectKind {
-	return &in.TypeMeta
-}
-
-// GetObjectMeta returns the object metadata
-func (in *InitzSecret) GetObjectMeta() metav1.Object {
-	return &in.ObjectMeta
-}
-
-// DeepCopyInto copies the receiver, writing into out. in must be non-nil.
-func (in *InitzSecret) DeepCopyInto(out *InitzSecret) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	out.ObjectMeta = in.ObjectMeta
-	out.Spec = in.Spec
-	out.Status = in.Status
-}
-
-// Implement client.Object interface for InitzSecret
-func (in *InitzSecret) GetNamespace() string {
-	return in.Namespace
-}
-
-func (in *InitzSecret) SetNamespace(namespace string) {
-	in.Namespace = namespace
-}
-
-func (in *InitzSecret) GetLabels() map[string]string {
-	return in.Labels
-}
-
-func (in *InitzSecret) SetLabels(labels map[string]string) {
-	in.Labels = labels
-}
-
-func (in *InitzSecret) DeepCopy() *InitzSecret {
 	out := &InitzSecret{}
 	in.DeepCopyInto(out)
 	return out
