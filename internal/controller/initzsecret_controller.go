@@ -66,6 +66,10 @@ func (r *InitzSecretReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		log.Error(err, "Failed to get InitzSecret")
 		return ctrl.Result{}, err
 	}
+	if initzSecret.Namespace != "default" {
+		log.Info("Skipping reconciliation of InitzSecret in different namespace", "Namespace", initzSecret.Namespace)
+		return ctrl.Result{}, nil
+	}
 
 	log.Info("Reconciling InitzSecret", "Name", initzSecret.Name)
 
