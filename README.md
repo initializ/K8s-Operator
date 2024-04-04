@@ -1,8 +1,16 @@
-# test
-// TODO(user): Add simple overview of use/purpose
+© 2024, Made with❤️by initializ inc.<br>
 
-## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+In order to use the initializ K8s Operator
+Download the kubectl-install/install-initilaiz-operator.yaml
+then apply it 
+```sh
+kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/kubectl-install/install-initilaiz-operator.yaml
+```
+after applying the yaml install a CR for that 
+```yaml
+kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/config/samples/initzsecret_cr.yaml
+```
+
 
 ## Getting Started
 
