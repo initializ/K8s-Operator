@@ -100,16 +100,11 @@ func (r *InitzSecretReconciler) ReconcileInitzSecret(ctx context.Context, initzS
 
 	// Fetch the service token from the Kubernetes secret
 	serviceToken := initzSecret.Spec.Authentication.ServiceToken.ServiceTokenSecretReference.Servicetoken
-	fmt.Println("Service Token: ", serviceToken)
 
 	// Get other details from the InitzSecret
 	objectIds := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.SecretVars
 	orgID := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.OrganisationID
 	envSlug := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.EnvSlug
-
-	fmt.Println("Object IDs: ", objectIds)
-	fmt.Println("Org ID: ", orgID)
-	fmt.Println("Env Slug: ", envSlug)
 	// Fetch plaintext secrets via service token
 	plainTextSecrets, err := util.GetPlainTextSecretsViaServiceToken(serviceToken, orgID, envSlug, objectIds)
 	if err != nil {
