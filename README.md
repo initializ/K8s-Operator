@@ -7,7 +7,7 @@ then apply it
 kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/kubectl-install/install-initilaiz-operator.yaml
 ```
 after applying the yaml install a CR for that 
-```yaml
+```sh
 kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/config/samples/initzsecret_cr.yaml
 ```
 
