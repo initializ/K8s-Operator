@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package v1
+package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -29,7 +29,7 @@ type InitzSecret struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   InitzSecretSpec   `json:"spec,omitempty"`
+	Spec InitzSecretSpec `json:"spec,omitempty"`
 }
 
 // InitzSecretSpec defines the desired state of InitzSecret
@@ -54,7 +54,7 @@ type ServiceToken struct {
 
 // SecretsScope defines the scope for fetching secrets
 type SecretsScope struct {
-	Workspace  string   `json:"workspace,omitempty"`
+	OrganisationID  string   `json:"organisationID,omitempty"`
 	EnvSlug    string   `json:"envSlug,omitempty"`
 	SecretVars []string `json:"secretVars,omitempty"`
 }
@@ -69,7 +69,6 @@ type ManagedSecretReference struct {
 	SecretName      string `json:"secretName,omitempty"`
 	SecretNamespace string `json:"secretNamespace,omitempty"`
 }
-
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status

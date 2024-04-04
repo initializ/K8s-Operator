@@ -1,4 +1,4 @@
 ## Append samples of your project ##
 resources:
-- alpha_v1_initzsecret.yaml
+- secrets_v1alpha1_initzsecret.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

@@ -23,8 +23,9 @@ import (
 	"time"
 
 	"github.com/go-logr/logr"
-	initializv1alpha1 "initializ.com/Initializ-Operator/api/v1"
-	"initializ.com/Initializ-Operator/package/util"
+
+	initializv1alpha1 "github.com/initializ/K8s-Operator/api/v1alpha1"
+	"github.com/initializ/K8s-Operator/package/util"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -66,11 +67,6 @@ func (r *InitzSecretReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		log.Error(err, "Failed to get InitzSecret")
 		return ctrl.Result{}, err
 	}
-	if initzSecret.Namespace != "default" {
-		log.Info("Skipping reconciliation of InitzSecret in different namespace", "Namespace", initzSecret.Namespace)
-		return ctrl.Result{}, nil
-	}
-
 	log.Info("Reconciling InitzSecret", "Name", initzSecret.Name)
 
 	if err := r.ReconcileInitzSecret(ctx, initzSecret); err != nil {
@@ -108,7 +104,7 @@ func (r *InitzSecretReconciler) ReconcileInitzSecret(ctx context.Context, initzS
 
 	// Get other details from the InitzSecret
 	objectIds := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.SecretVars
-	orgID := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.Workspace
+	orgID := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.OrganisationID
 	envSlug := initzSecret.Spec.Authentication.ServiceToken.SecretsScope.EnvSlug
 
 	fmt.Println("Object IDs: ", objectIds)

@@ -20,7 +20,7 @@ func CallGetEncryptedWorkspaceKey(httpClient *resty.Client, serviceToken string,
 		SetResult(&result).
 		SetHeader("org_id", request.OrgID). // Set the content type header
 		SetHeader("User-Agent", USER_AGENT_TYPE).
-		SetHeader("App-User", "testsecert").
+		// SetHeader("App-User", "testsecert").
 		SetHeader("Authorization", "Bearer "+serviceToken). // Set the Authorization header with the bearer token
 		Get(endpoint)
 	if err != nil {
@@ -46,7 +46,7 @@ func CallGetEncryptedSecrets(request GetEncryptedSecretsRequest, serviceToken st
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+serviceToken)
 	req.Header.Set("User-Agent", USER_AGENT_TYPE)
-	req.Header.Set("App-User", "testsecert")
+	// req.Header.Set("App-User", "testsecert")
 	req.Header.Set("org_id", request.OrgId)
 
 	// Make the request
@@ -70,10 +70,14 @@ func CallGetEncryptedSecrets(request GetEncryptedSecretsRequest, serviceToken st
 	// fmt.Println("Response Body:", string(body))
 
 	// Unmarshal response body into result
-	err = json.Unmarshal(body, &result)
-	if err != nil {
-		fmt.Println("Error unmarshaling response body:", err)
-		return GetEncryptedSecretResponse{}, err
+	if resp.Status == "200 OK" {
+		err = json.Unmarshal(body, &result)
+		if err != nil {
+			fmt.Println("Error unmarshaling response body:", err)
+			return GetEncryptedSecretResponse{}, err
+		}
+	} else {
+		return GetEncryptedSecretResponse{}, fmt.Errorf("CallGetEncryptedSecrets: Unsuccessful response: [response=%s]", resp.Status)
 	}
 
 	return result, nil

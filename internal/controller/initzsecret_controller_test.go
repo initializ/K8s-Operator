@@ -27,7 +27,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	alphav1 "initializ.com/Initializ-Operator/api/v1"
+	secretsv1alpha1 "github.com/initializ/K8s-Operator/api/v1alpha1"
 )
 
 var _ = Describe("InitzSecret Controller", func() {
@@ -40,13 +40,13 @@ var _ = Describe("InitzSecret Controller", func() {
 			Name:      resourceName,
 			Namespace: "default", // TODO(user):Modify as needed
 		}
-		initzsecret := &alphav1.InitzSecret{}
+		initzsecret := &secretsv1alpha1.InitzSecret{}
 
 		BeforeEach(func() {
 			By("creating the custom resource for the Kind InitzSecret")
 			err := k8sClient.Get(ctx, typeNamespacedName, initzsecret)
 			if err != nil && errors.IsNotFound(err) {
-				resource := &alphav1.InitzSecret{
+				resource := &secretsv1alpha1.InitzSecret{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      resourceName,
 						Namespace: "default",
@@ -59,7 +59,7 @@ var _ = Describe("InitzSecret Controller", func() {
 
 		AfterEach(func() {
 			// TODO(user): Cleanup logic after each test, like removing the resource instance.
-			resource := &alphav1.InitzSecret{}
+			resource := &secretsv1alpha1.InitzSecret{}
 			err := k8sClient.Get(ctx, typeNamespacedName, resource)
 			Expect(err).NotTo(HaveOccurred())
 
