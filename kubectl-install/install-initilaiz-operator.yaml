@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: namespace
     app.kubernetes.io/part-of: k8-operator
     control-plane: controller-manager
-  name: initializ-operator-system
+  name: initializ-system
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -113,8 +113,8 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: serviceaccount
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-controller-manager
-  namespace: initializ-operator-system
+  name: initializ-controller-manager
+  namespace: initializ-system
 ---
 
 ---
@@ -128,8 +128,8 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: role
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-leader-election-role
-  namespace: initializ-operator-system
+  name: initializ-leader-election-role
+  namespace: initializ-system
 rules:
   - apiGroups:
       - ""
@@ -167,7 +167,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   creationTimestamp: null
-  name: initializ-operator-manager-role
+  name: initializ-manager-role
 rules:
   - apiGroups:
       - ""
@@ -237,7 +237,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: clusterrole
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-metrics-reader
+  name: initializ-metrics-reader
 rules:
   - nonResourceURLs:
       - /metrics
@@ -254,7 +254,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: clusterrole
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-proxy-role
+  name: initializ-proxy-role
 rules:
   - apiGroups:
       - authentication.k8s.io
@@ -279,16 +279,16 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: rolebinding
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-leader-election-rolebinding
-  namespace: initializ-operator-system
+  name: initializ-leader-election-rolebinding
+  namespace: initializ-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: initializ-operator-leader-election-role
+  name: initializ-leader-election-role
 subjects:
   - kind: ServiceAccount
-    name: initializ-operator-controller-manager
-    namespace: initializ-operator-system
+    name: initializ-controller-manager
+    namespace: initializ-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -300,15 +300,15 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: clusterrolebinding
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-manager-rolebinding
+  name: initializ-manager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: initializ-operator-manager-role
+  name: initializ-manager-role
 subjects:
   - kind: ServiceAccount
-    name: initializ-operator-controller-manager
-    namespace: initializ-operator-system
+    name: initializ-controller-manager
+    namespace: initializ-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -320,15 +320,15 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: clusterrolebinding
     app.kubernetes.io/part-of: k8-operator
-  name: initializ-operator-proxy-rolebinding
+  name: initializ-proxy-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: initializ-operator-proxy-role
+  name: initializ-proxy-role
 subjects:
   - kind: ServiceAccount
-    name: initializ-operator-controller-manager
-    namespace: initializ-operator-system
+    name: initializ-controller-manager
+    namespace: initializ-system
 ---
 apiVersion: v1
 kind: Service
@@ -341,8 +341,8 @@ metadata:
     app.kubernetes.io/name: service
     app.kubernetes.io/part-of: k8-operator
     control-plane: controller-manager
-  name: initializ-operator-controller-manager-metrics-service
-  namespace: initializ-operator-system
+  name: initializ-controller-manager-metrics-service
+  namespace: initializ-system
 spec:
   ports:
     - name: https
@@ -363,8 +363,8 @@ metadata:
     app.kubernetes.io/name: deployment
     app.kubernetes.io/part-of: k8-operator
     control-plane: controller-manager
-  name: initializ-operator-controller-manager
-  namespace: initializ-operator-system
+  name: initializ-controller-manager
+  namespace: initializ-system
 spec:
   replicas: 1
   selector:
@@ -451,5 +451,5 @@ spec:
                 - ALL
       securityContext:
         runAsNonRoot: true
-      serviceAccountName: initializ-operator-controller-manager
+      serviceAccountName: initializ-controller-manager
       terminationGracePeriodSeconds: 10

@@ -114,8 +114,8 @@ func (r *InitzSecretReconciler) ReconcileInitzSecret(ctx context.Context, initzS
 	// Create or update the managed Kubernetes secret
 	managedSecret := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      initzSecret.Spec.ManagedSecretReference.SecretName,
-			Namespace: initzSecret.Spec.ManagedSecretReference.SecretNamespace,
+			Name:      initzSecret.Name + "-initz-managed-secret",
+			Namespace: initzSecret.Namespace,
 		},
 		Data: map[string][]byte{},
 	}
@@ -158,18 +158,3 @@ func (r *InitzSecretReconciler) createOrUpdateManagedSecret(ctx context.Context,
 
 	return nil
 }
-
-// updateStatus updates the status of the InitzSecret resource
-// func (r *InitzSecretReconciler) updateStatus(ctx context.Context, initzSecret *initializv1alpha1.InitzSecret) error {
-// 	// Perform any status update logic here
-// 	// For example, updating the last reconcile time
-// 	initzSecret.Status.LastReconcileTime = metav1.Now()
-
-// 	// Update the status
-// 	err := r.Status().Update(ctx, initzSecret)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
