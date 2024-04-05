@@ -75,10 +75,6 @@ spec:
                                 type: string
                             organisationID:
                               type: string
-                          required:
-                            - envSlug
-                            - secretVars
-                            - organisationID
                         serviceTokenSecretReference:
                           type: object
                           description:
@@ -92,11 +88,6 @@ spec:
                 resyncInterval:
                   type: integer
                   format: int64
-          required:
-            - apiVersion
-            - kind
-            - metadata
-            - spec
 ---
 kind: CustomResourceDefinition
 metadata:
