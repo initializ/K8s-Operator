@@ -27,6 +27,92 @@ spec:
   scope: Namespaced
   versions:
     - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          description: InitzSecret is the Schema for the initzsecrets API
+          type: object
+          properties:
+            apiVersion:
+              type: string
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            kind:
+              type: string
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            metadata:
+              type: object
+            spec:
+              type: object
+              description: InitzSecretSpec defines the desired state of InitzSecret
+              properties:
+                authentication:
+                  type: object
+                  description: Authentication defines the authentication details
+                  properties:
+                    serviceToken:
+                      type: object
+                      description: ServiceToken defines the service token details
+                      properties:
+                        secretsScope:
+                          type: object
+                          description: SecretsScope defines the scope for fetching secrets
+                          properties:
+                            envSlug:
+                              type: string
+                            secretVars:
+                              type: array
+                              items:
+                                type: string
+                            organisationID:
+                              type: string
+                          required:
+                            - envSlug
+                            - secretVars
+                            - organisationID
+                        serviceTokenSecretReference:
+                          type: object
+                          description:
+                            SecretReference defines the reference to a Kubernetes
+                            secret
+                          properties:
+                            servicetoken:
+                              type: string
+                          required:
+                            - servicetoken
+                resyncInterval:
+                  type: integer
+                  format: int64
+          required:
+            - apiVersion
+            - kind
+            - metadata
+            - spec
+---
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  name: initzsecrets.secrets.initializ.ai
+spec:
+  group: secrets.initializ.ai
+  names:
+    kind: InitzSecret
+    listKind: InitzSecretList
+    plural: initzsecrets
+    singular: initzsecret
+  scope: Namespaced
+  versions:
+    - name: v1alpha1
       schema:
         openAPIV3Schema:
           description: InitzSecret is the Schema for the initzsecrets API
