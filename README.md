@@ -4,7 +4,7 @@ In order to use the initializ K8s Operator
 Download the kubectl-install/install-initilaiz-operator.yaml
 then apply it 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/kubectl-install/install-initilaiz-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/kubectl-install/install-initializ-operator.yaml
 ```
 after applying the yaml install a CR for that 
 ```sh
