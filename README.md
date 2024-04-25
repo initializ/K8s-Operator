@@ -2,25 +2,29 @@
 
 In order to use the initializ K8s Operator
 Download the kubectl-install/install-initilaiz-operator.yaml
-then apply it 
+then apply it
+
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/kubectl-install/install-initializ-operator.yaml
-```
-after applying the yaml install a CR for that 
-```sh
-kubectl apply -f https://raw.githubusercontent.com/initializ/K8s-Operator/main/config/samples/initzsecret_cr.yaml
+kubectl apply -f https://raw.githubusercontent.com/initializ/secrets-operator/main/kubectl-install/install-initializ-operator.yaml
 ```
 
+after applying the yaml install a CR for that
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/initializ/secrets-operator/main/config/samples/initzsecret_cr.yaml
+```
 
 ## Getting Started
 
 ### Prerequisites
+
 - go version v1.21.0+
 - docker version 17.03+.
 - kubectl version v1.11.3+.
 - Access to a Kubernetes v1.11.3+ cluster.
 
 ### To Deploy on the cluster
+
 **Build and push your image to the location specified by `IMG`:**
 
 ```sh
@@ -44,7 +48,7 @@ make deploy IMG=<some-registry>/test:tag
 ```
 
 > **NOTE**: If you encounter RBAC errors, you may need to grant yourself cluster-admin
-privileges or be logged in as admin.
+> privileges or be logged in as admin.
 
 **Create instances of your solution**
 You can apply the samples (examples) from the config/sample:
@@ -53,9 +57,10 @@ You can apply the samples (examples) from the config/sample:
 kubectl apply -k config/samples/
 ```
 
->**NOTE**: Ensure that the samples has default values to test it out.
+> **NOTE**: Ensure that the samples has default values to test it out.
 
 ### To Uninstall
+
 **Delete the instances (CRs) from the cluster:**
 
 ```sh
@@ -98,6 +103,7 @@ kubectl apply -f https://raw.githubusercontent.com/<org>/test/<tag or branch>/di
 ```
 
 ## Contributing
+
 // TODO(user): Add detailed information on how you would like others to contribute to this project
 
 **NOTE:** Run `make help` for more information on all potential `make` targets
@@ -119,4 +125,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-

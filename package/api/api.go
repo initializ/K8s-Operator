@@ -4,16 +4,17 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/go-resty/resty/v2"
 	"io"
 	"net/http"
+
+	"github.com/go-resty/resty/v2"
 )
 
 const USER_AGENT_TYPE = "k8-operator"
 
 // this function is used to get the key of the organisation
 func CallGetEncryptedWorkspaceKey(httpClient *resty.Client, serviceToken string, request GetEncryptedWorkspaceKeyRequest) (GetEncryptedWorkspaceKeyResponse, error) {
-	API_HOST_URL:=request.HostAPI
+	API_HOST_URL := request.HostAPI
 	endpoint := API_HOST_URL + "getkey"
 	var result GetEncryptedWorkspaceKeyResponse
 	response, err := httpClient.
@@ -36,7 +37,7 @@ func CallGetEncryptedWorkspaceKey(httpClient *resty.Client, serviceToken string,
 // CallGetEncryptedSecrets makes the API call to fetch encrypted secrets.
 // CallGetEncryptedSecrets makes the API call to fetch encrypted secrets.
 func CallGetEncryptedSecrets(request GetEncryptedSecretsRequest, serviceToken string) (GetEncryptedSecretResponse, error) {
-	API_HOST_URL:=request.HostAPI
+	API_HOST_URL := request.HostAPI
 	endpoint := API_HOST_URL + "getsecrets"
 	var result GetEncryptedSecretResponse
 
