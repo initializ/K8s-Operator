@@ -19,12 +19,14 @@ type GetEncryptedWorkspaceKeyResponse struct {
 
 type GetEncryptedWorkspaceKeyRequest struct {
 	OrgID string `json:"org_id"`
+	HostAPI string `json:"hostapi"`
 }
 
 type GetEncryptedSecretsRequest struct {
 	SecretIDs   []string `json:"secret_ids"`
 	Environment string   `json:"environment"`
 	OrgId       string   `json:"org_id"`
+	HostAPI	 string   `json:"hostapi"`
 }
 
 type SecretData struct {

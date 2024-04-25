@@ -11,14 +11,15 @@ type KeyValue struct {
 	Value string
 }
 
-func GetPlainTextSecretsViaServiceToken(serviceToken string, org_id string, envSlug string, objectIds []string) ([]KeyValue, error) {
+func GetPlainTextSecretsViaServiceToken(serviceToken string, org_id string, envSlug string, objectIds []string,hostapi string) ([]KeyValue, error) {
 	var decryptedPairs []KeyValue
-
+    
 	httpClient := resty.New()
 	request := api.GetEncryptedWorkspaceKeyRequest{
 		OrgID: org_id,
+		HostAPI: hostapi,
 	}
-
+    
 	response, err := api.CallGetEncryptedWorkspaceKey(httpClient, serviceToken, request)
 	if err != nil {
 		return nil, err
@@ -40,6 +41,7 @@ func GetPlainTextSecretsViaServiceToken(serviceToken string, org_id string, envS
 		SecretIDs:   objectIds,
 		Environment: envSlug,
 		OrgId:       org_id,
+		HostAPI: hostapi,
 	}
 
 	secretResponse, err := api.CallGetEncryptedSecrets(secretsRequest, serviceToken)
